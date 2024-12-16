@@ -6,14 +6,19 @@ let socket = null;
 
 export const connectSocket = (userId) => {
     if (!socket) {
-        socket = io("http://localhost:3000", {
+        socket = io("https://chatty-frontend-six.vercel.app", {
             transports: ["websocket"], // Enforce WebSocket protocol
             withCredentials: true, // Ensure credentials are sent
+            reconnection: true, // Enable reconnection
+            reconnectionAttempts: 5, // Max attempts
             query: {
                 userId: userId
             }
         });
     }
+    socket.on("connect", () => {
+        console.log("Socket connected:", socket.id);
+    });
     socket.on("getOnlineUsers", (users) => {
     })
     return socket;

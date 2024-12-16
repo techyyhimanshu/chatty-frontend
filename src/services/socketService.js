@@ -7,6 +7,8 @@ let socket = null;
 export const connectSocket = (userId) => {
     if (!socket) {
         socket = io("http://localhost:3000", {
+            transports: ["websocket"], // Enforce WebSocket protocol
+            withCredentials: true, // Ensure credentials are sent
             query: {
                 userId: userId
             }

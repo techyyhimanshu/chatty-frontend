@@ -6,7 +6,7 @@ let socket = null;
 
 export const connectSocket = (userId) => {
     if (!socket) {
-        socket = io("https://chatty-frontend-six.vercel.app", {
+        socket = io("https://chatty-backend-vaxv.onrender.com", {
             transports: ["websocket"], // Enforce WebSocket protocol
             withCredentials: true, // Ensure credentials are sent
             reconnection: true, // Enable reconnection

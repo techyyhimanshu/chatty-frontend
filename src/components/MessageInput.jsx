@@ -31,17 +31,16 @@ const MessageInput = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!text.trim() && !imagePreview) return;
+        const message = text.trim()
+        const image = imagePreview
         setText("");
+        setImagePreview(null)
 
         try {
             await dispatch(sendMessage({
-                text: text.trim(),
-                image: imagePreview,
+                text: message,
+                image: image,
             }));
-
-            // Clear form
-            setImagePreview(null);
-            if (fileInputRef.current) fileInputRef.current.value = "";
         } catch (error) {
             console.error("Failed to send message:", error);
         }
@@ -69,7 +68,7 @@ const MessageInput = () => {
                 </div>
             )}
 
-            <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+            <form className="flex items-center gap-2">
                 <div className="flex-1 flex gap-2">
                     <input
                         type="text"
@@ -96,9 +95,10 @@ const MessageInput = () => {
                     </button>
                 </div>
                 <button
-                    type="submit"
+                    type="button"
                     className="btn btn-sm btn-circle"
                     disabled={!text.trim() && !imagePreview}
+                    onClick={handleSendMessage}
                 >
                     <Send size={22} />
                 </button>

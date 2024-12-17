@@ -145,7 +145,12 @@ export const loginUser = (data) => async (dispatch, getState) => {
 export const logoutUser = () => async (dispatch) => {
     console.log("Logout initiated...");
     try {
-        Cookies.remove("jwt");
+        Cookies.remove("jwt", {
+            path: '/',
+            secure: true,
+            sameSite: "None", // Allows cross-origin
+
+        });
         dispatch(setAuthUser(null)); // Update state with user data
         dispatch(setSocketConnected(false));
         disconnectSocket();

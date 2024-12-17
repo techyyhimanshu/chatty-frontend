@@ -55,7 +55,7 @@ export const fetchUsers = () => async (dispatch) => {
             dispatch(setUsers(null)); // Reset user state on failure
         }
     } catch (error) {
-        console.log("Error fetching auth user:", error);
+        console.log("Error fetching  users:", error);
         dispatch(setUsers(null)); // Handle error case
     } finally {
         dispatch(setUsersLoading(false)); // Reset loading state

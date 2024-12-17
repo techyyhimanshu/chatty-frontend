@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { io } from "socket.io-client";
+import Cookies from 'js-cookie';
 import { connectSocket, disconnectSocket } from "../services/socketService";
 
 const authSlice = createSlice({
@@ -108,7 +108,6 @@ export const loginUser = (data) => async (dispatch, getState) => {
 
         if (response.status === 200 || response.status === 201) {
             const authUser = response.data.data;
-            console.log("Auth suer", authUser)
             // Update user state and show success message
             dispatch(setAuthUser(authUser));
             toast.success("Login successful");
@@ -146,19 +145,12 @@ export const loginUser = (data) => async (dispatch, getState) => {
 export const logoutUser = () => async (dispatch) => {
     console.log("Logout initiated...");
     try {
-        const response = await axiosInstance.post("/auth/logout");
-        if (response.status === 200) {
-            dispatch(setAuthUser(null)); // Update state with user data
-            dispatch(setSocketConnected(false));
-            disconnectSocket();
-            toast.success("Logout successful");
-            return true;
-        }
-
-        // Handle unexpected response status
-        toast.error("Unexpected response during logout");
-        dispatch(setAuthUser(null)); // Reset user state on failure
-        return false;
+        Cookies.remove("jwt");
+        dispatch(setAuthUser(null)); // Update state with user data
+        dispatch(setSocketConnected(false));
+        disconnectSocket();
+        toast.success("Logout successful");
+        return true;
     } catch (error) {
         if (error.response && error.response.status === 400) {
             dispatch(setAuthUser(null)); // Handle specific error case

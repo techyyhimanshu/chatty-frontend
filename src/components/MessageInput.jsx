@@ -31,6 +31,7 @@ const MessageInput = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!text.trim() && !imagePreview) return;
+        setText("");
 
         try {
             await dispatch(sendMessage({
@@ -39,7 +40,6 @@ const MessageInput = () => {
             }));
 
             // Clear form
-            setText("");
             setImagePreview(null);
             if (fileInputRef.current) fileInputRef.current.value = "";
         } catch (error) {

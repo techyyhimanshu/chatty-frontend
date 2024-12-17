@@ -11,7 +11,6 @@ function Sidebar() {
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log(users)
         if (users.length === 0) {
             dispatch(fetchUsers());
         }

@@ -12,8 +12,6 @@ function ChatContainer() {
     const dispatch = useDispatch();
     const messageEndRef = useRef(null);
     useEffect(() => {
-
-
         if (selectedUser?._id) {
             dispatch(fetchMessages(selectedUser._id));
             dispatch(subscribeToMessages())
@@ -53,7 +51,7 @@ function ChatContainer() {
                     messages.map((message) => (
                         <div
                             key={message._id}
-                            className={`chat ${message.senderId === authUser.id ? 'chat-end' : 'chat-start'
+                            className={`chat ${message.senderId === authUser._id ? 'chat-end' : 'chat-start'
                                 }`}
                             ref={messageEndRef}
                         >

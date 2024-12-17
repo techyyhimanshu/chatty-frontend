@@ -8,7 +8,6 @@ function Home() {
     const { selectedUser } = useSelector((state) => state.chats)
     const { authUser } = useSelector((state) => state.authenticate)
     const sidebar = useSelector((state) => state.sidebar)
-    console.log(sidebar)
     return (
         <div className="h-screen bg-base-200">
             <div className="flex items-center justify-center pt-20 px-4">

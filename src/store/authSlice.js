@@ -3,6 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { connectSocket, disconnectSocket } from "../services/socketService";
+import Cookies from "js-cookie";
 
 const authSlice = createSlice({
     name: "authenticate",

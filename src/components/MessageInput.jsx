@@ -68,7 +68,7 @@ const MessageInput = () => {
                 </div>
             )}
 
-            <form className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
                 <div className="flex-1 flex gap-2">
                     <input
                         type="text"
@@ -102,7 +102,7 @@ const MessageInput = () => {
                 >
                     <Send size={22} />
                 </button>
-            </form>
+            </div>
         </div>
     );
 };

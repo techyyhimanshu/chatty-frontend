@@ -9,6 +9,7 @@ import { fetchAuthUser } from './store/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from "lucide-react"
 import { Toaster } from 'react-hot-toast'
+import { fetchUnreadMessages } from './store/chatSlice'
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector((state) => state.authenticate)

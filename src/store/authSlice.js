@@ -1,9 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import Cookies from 'js-cookie';
 import { connectSocket, disconnectSocket } from "../services/socketService";
-import Cookies from "js-cookie";
 
 const authSlice = createSlice({
     name: "authenticate",
@@ -57,7 +55,6 @@ export const fetchAuthUser = () => async (dispatch, getState) => {
         if (response.status === 200) {
             dispatch(setAuthUser(response.data)); // Update state with user data
             const { authUser } = getState().authenticate
-            console.log(response.data)
             const socket = connectSocket(authUser._id)
             socket.on("getOnlineUsers", (userIds) => {
                 dispatch(setOnlineUsers(userIds))
@@ -119,6 +116,7 @@ export const loginUser = (data) => async (dispatch, getState) => {
                 dispatch(setOnlineUsers(userIds)); // Update online users in state
             });
 
+
             // Indicate successful login
             return true;
         }
@@ -146,17 +144,15 @@ export const loginUser = (data) => async (dispatch, getState) => {
 export const logoutUser = () => async (dispatch) => {
     console.log("Logout initiated...");
     try {
-        Cookies.remove("jwt", {
-            path: '/',
-            secure: true,
-            sameSite: "None", // Allows cross-origin
+        const response = await axiosInstance.post("/auth/logout");
+        if (response.status === 200 || response.status === 201) {
+            dispatch(setAuthUser(null)); // Update state with user data
+            dispatch(setSocketConnected(false));
+            disconnectSocket();
+            toast.success("Logout successful");
+            return true;
+        }
 
-        });
-        dispatch(setAuthUser(null)); // Update state with user data
-        dispatch(setSocketConnected(false));
-        disconnectSocket();
-        toast.success("Logout successful");
-        return true;
     } catch (error) {
         if (error.response && error.response.status === 400) {
             dispatch(setAuthUser(null)); // Handle specific error case

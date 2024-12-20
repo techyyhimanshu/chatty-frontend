@@ -6,7 +6,7 @@ let socket = null;
 
 export const connectSocket = (userId) => {
     if (!socket) {
-        socket = io("https://chatty-backend-vaxv.onrender.com", {
+        socket = io("http://localhost:3000", {
             transports: ["websocket"], // Enforce WebSocket protocol
             withCredentials: true, // Ensure credentials are sent
             reconnection: true, // Enable reconnection
@@ -19,15 +19,13 @@ export const connectSocket = (userId) => {
     socket.on("connect", () => {
         console.log("Socket connected:", socket.id);
     });
-    socket.on("getOnlineUsers", (users) => {
-    })
     return socket;
 };
 
 export const disconnectSocket = () => {
     if (socket) {
         socket.disconnect();
-        socket = null;
+        // socket = null;
     }
 };
 export const getSocket = () => socket;

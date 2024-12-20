@@ -15,7 +15,6 @@ function Login() {
     const dispatch = useDispatch()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
         await dispatch(loginUser(formData))
     }
     return (

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import authSlice from "./authSlice.js"
 import { getSocket } from "../services/socketService.js";
+import { playNotificationSound } from "../services/notificationService.js";
 
 
 const chatSlice = createSlice({
@@ -178,6 +179,7 @@ export const subscribeToMessages = () => async (dispatch, getState) => {
                 dispatch(addMessage(newMessage));
             } else {
                 dispatch(addUnReadMessage(newMessage))
+                playNotificationSound()
                 console.log("unreadMessages", getState().unreadMessages)
 
             }
